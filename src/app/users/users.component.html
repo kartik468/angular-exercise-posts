@@ -1,0 +1,28 @@
+<div class="users-container">
+  <div *ngIf="users">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">UserId</th>
+          <th scope="col">Name</th>
+          <th scope="col">Username</th>
+          <th scope="col">Email</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <!-- <i class="fa fa-eye cursor-pointer" [routerLink]="['/users', user.id]" aria-hidden="true"></i> -->
+            <!-- <i class="fa fa-eye cursor-pointer" [routerLink]="user.id" aria-hidden="true"></i> -->
+            <i class="fa fa-eye cursor-pointer" (click)="navigateToViewUser(user)" aria-hidden="true"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
