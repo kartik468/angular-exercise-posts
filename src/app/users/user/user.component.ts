@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormArray, ValidatorFn, ValidationErrors, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { User } from '../models/user';
@@ -33,10 +33,17 @@ export class UserComponent implements OnInit {
     return this.userForm.get('contacts') as FormArray;
   }
 
+  forbiddenName(name: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      return value === name ? { forbiddenName: value } : null;
+    };
+  }
+
   createUserForm() {
     this.userForm = new FormGroup({
       id: new FormControl('', { validators: [Validators.required] }),
-      name: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required, this.forbiddenName('kartik')]),
       username: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       address: new FormGroup({
@@ -62,5 +69,11 @@ export class UserComponent implements OnInit {
   onEditUserClick() {
     this.isEdit = true;
     this.userForm.patchValue(this.user);
+  }
+
+  onSubmit() {
+    if (this.userForm.valid) {
+      this.usersService.editUser(this.userForm.value).subscribe(_ => {});
+    }
   }
 }

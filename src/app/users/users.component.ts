@@ -23,6 +23,6 @@ export class UsersComponent implements OnInit {
   }
 
   navigateToViewUser(user: User) {
-    this.router.navigate([`./${user.id}`], { relativeTo: this.activatedRoute });
+    this.router.navigate([`./${user.id}`, { a: 1, b: '{ "z": 1 }' }], { relativeTo: this.activatedRoute });
   }
 }

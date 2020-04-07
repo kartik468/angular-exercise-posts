@@ -23,4 +23,8 @@ export class UsersService {
     // });
     return this.http.get<User>(`https://jsonplaceholder.typicode.com/users/${userId}`);
   }
+
+  editUser(user: User): Observable<User> {
+    return this.http.put<User>(`https://jsonplaceholder.typicode.com/posts/${user.id}`, user);
+  }
 }
